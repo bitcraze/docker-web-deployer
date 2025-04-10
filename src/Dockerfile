@@ -1,6 +1,6 @@
-FROM ubuntu:18.04
+FROM ubuntu:24.04
 
-MAINTAINER Kristoffer Richardsson <kristoffer@bitcraze.io>
+LABEL org.opencontainers.image.authors="arnaud@bitcraze.io"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		python3 python3-yaml \
@@ -8,15 +8,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		ca-certificates \
 		openssh-client \
   		jq \
-                awscli \
+		s3cmd \
 	&& rm -rf /var/lib/apt/lists/*
 
 # Install docker
-ENV DOCKER_VERSION 19.03.1
+ENV DOCKER_VERSION=19.03.1
 RUN curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz && tar --strip-components=1 -xvzf docker-${DOCKER_VERSION}.tgz -C /usr/local/bin
 
 # Install kubectl
-ENV KUBECTL_VERSION 1.26.2
+ENV KUBECTL_VERSION=1.31.6
 RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl \
  && chmod +x /usr/local/bin/kubectl
 
